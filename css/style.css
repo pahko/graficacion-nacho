@@ -1,0 +1,42 @@
+body{
+	background:#EEE;
+    font-family:"Verdana", serif;
+}
+#wrapper{
+	width:auto;
+}
+#puerto-vision{
+	width:830px;
+	height:700px;
+	float:left;
+	margin:20px 0 0 40px;
+}
+#panel{
+	width:300px;
+	height:400px;
+	float:right;
+	margin:20px 40px 0 0;
+	
+}
+dl{
+	padding:10px;
+}
+#actual{
+	width:300px;
+	height:250px;
+	float:right;
+	margin:20px 40px 0 0;
+}
+h1{
+	color:#CC0000;
+	font-size:35px;
+	letter-spacing:2px;
+	word-spacing:4px;
+}
+h2{
+	color:#004288
+}
+h3{
+	color:CC0000;
+	font-size:15px;
+}
