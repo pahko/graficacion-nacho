@@ -230,12 +230,18 @@ $(function(){
 		resolucion = 100 / porcentaje
 		dibujar_ejes()
 		dibuja(funciones)
-	})
+	});
 
 	$('#zoomout').click(function(){
 		porcentaje -= 1000
 		resolucion = 100 / porcentaje
 		dibujar_ejes()
 		dibuja(funciones)
-	})
+	});
+
+	$('#limpiar').click(function(){
+		funciones = [];
+		funciones2 = [];
+		$("#lista").html('');
+	});
 })
