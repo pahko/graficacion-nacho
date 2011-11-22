@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); require('db.php');?>
 <!doctype html>
 <html>
 	<head>
@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="colorpicker/js/colorpicker.js"></script>
 		<script type="text/javascript" src="js/jquery-ui.custom.min.js"></script>
+		<script type="text/javascript" src="js/Concurrent.Thread.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="colorpicker/css/colorpicker.css"/>
@@ -28,6 +29,25 @@
 					if (isset($_SESSION['usuario'])){
 				?>
 				<h2>Bienvenido <?php echo $_SESSION['usuario']; ?></h2>
+				<br />
+				<div id="funciones-lista">
+					<?php
+						$link = mysql_connect(HOST, USER, PASS);
+				        mysql_select_db(DB, $link);
+				        $sql = "SELECT * FROM funciones WHERE idusuario = '". $_SESSION['id'] ."'";
+
+				        $res = mysql_query($sql);
+
+				        while ($row = mysql_fetch_array($res)){
+					?>
+						<div>
+							<b>Funcion: </b> <?php echo $row['funcion']; ?> <b> Color: </b>
+							<?php echo $row['color']; ?> <b> Grosor: </b> <?php echo $row['grosor'] ?>
+							<input type="checkbox" value="<?php echo $row['idfunciones'].'.....'.$row['funcion'].'.....'.$row['color'].'.....'.$row['grosor']; ?>" /></div>
+					<?php
+					}
+					?>
+				</div>
 				<br />
 				<button id="logout">Cerrar Sesión</button>
 				<?php
@@ -98,7 +118,19 @@
 						</dt>
 
 				</dl-->
-				<button id="limpiar">Limpiar</button>
+				<dl>
+					<button id="limpiar">Limpiar</button>
+					<?php
+						if (isset($_SESSION['usuario'])){
+					?>
+					<button id="guardar-funciones">Guardar Funciones</button>
+					<button id="graficar-funciones">Dibujar Funciones Guardadas</button>
+					<button id="eliminar-funciones">Eliminar Funciones Guardadas</button>
+					<br />
+					<?php
+					}
+					?>
+				</dl>
 			</div>
 			<div id="funciones">
 				<dl>
@@ -147,8 +179,8 @@
 				<div id="autor">
 					<h2>Desarrollado por:</h2><br />
 					<h3>Albarrán Cristobal<h3><br />
-					<h3>Tinoco Duarte Mejia Ramiro<h3><br />
-					<h3>Torres Marroquin Angel Andres<h3><br />
+					<h3>Jesus Salvador Meza Sanchez<h3><br />
+					<h3>Fernando Hernandez Argueta<h3><br />
 
 				</div>
 			</div>

@@ -18,6 +18,7 @@
             echo json_encode(array("error", "error al insertar el usuario"));
         } else{
             $_SESSION['usuario'] = $_POST['usuario'];
+            $_SESSION['id'] = mysql_insert_id();
             echo json_encode(array("error", ""));
         }
     }

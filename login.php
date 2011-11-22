@@ -13,7 +13,8 @@
         }
         $sql = "SELECT * FROM usuario where email = '". $_POST['usuario'] ."' and pass = '". md5($_POST['pass']) ."'";
         $res = mysql_query($sql);
-        if ($row = mysql_fetch_row($res)){
+        if ($row = mysql_fetch_array($res)){
+            $_SESSION['id'] = $row['idusuario'];
             $_SESSION['usuario'] = $_POST['usuario'];
             echo json_encode(array("error", ""));
         } else {

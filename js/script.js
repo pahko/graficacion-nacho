@@ -66,7 +66,7 @@ function dibuja(lista){
 		contexto.strokeStyle = e[1];
 		contexto.beginPath()
 		contexto.lineWidth = e[2]
-
+		console.log("sigue trabajando " + i);
 		for(var x = -400; x < 400; x += resolucion){
 
 			x1 = x*relacion + 400
@@ -124,7 +124,7 @@ $(function(){
 			}
 	});
 	$( "#zoom" ).val($( "#slider" ).slider( "value" )+'%' );
-	/*$('#x').click(function(){
+	$('#x').click(function(){
 		$('#funcion').val('').val('x');
 		$('#dibujar').click();
 	});
@@ -171,13 +171,12 @@ $(function(){
 	$('#atan').click(function(){
 		$('#funcion').val('').val('1/Math.tan(x)');
 		$('#dibujar').click();
-	});*/
+	});
 
 
 	/*
 	 *Creacion del puerto de vision (canvas)
 	 */
-	 /*
 	canvas = $('#micanvas')[0]
 	contexto = canvas.getContext('2d')
 	contexto.fillStyle = '#ffffff';
@@ -185,20 +184,23 @@ $(function(){
 
 	contexto.fill();
 	contexto.stroke();
-	contexto.closePath();*/
+	contexto.closePath();
 
 	/*
 	 *Asigancion de eventos a los botones
 	 */
-	/*$('#borrar').click(dibujar_ejes).click()
+	$('#borrar').click(dibujar_ejes).click()
 
 	$('#dibujar').click(function(){
 		funciones.push([$('#funcion').val(), '#' + $('#colorpicker').val(), +$('#ancho').val()])
 		funciones2.push([$('#funcion').val() +"-"+ "<input class='color' type='text' size='1' value="+$('#colorpicker').val()+">" +"-"+ $('#ancho').val()])
 
-		dibuja(funciones)
-		lista(funciones2)
-	}).click()
+		Concurrent.Thread.create(dibuja, funciones);
+		Concurrent.Thread.create(lista, funciones2);
+
+		//dibuja(funciones)
+		//lista(funciones2)
+	});
 
 	$('#colorpicker').ColorPicker({
 		onSubmit: function(hsb, hex, rgb, el) {
@@ -243,7 +245,8 @@ $(function(){
 		funciones = [];
 		funciones2 = [];
 		$("#lista").html('');
-	});*/
+		dibujar_ejes();
+	});
 
 	$("#registrarse").click(function(){
 		$("#errores-reg").html('');
@@ -308,5 +311,51 @@ $(function(){
 				location.reload(true);
 			}
 		});
+	});
+
+	$("#guardar-funciones").click(function(){
+		for(var i=0; i<funciones.length; i++) {
+			$.ajax({
+				data: "funcion=" + funciones[i][0] + "&color=" + funciones[i][1] + "&grosor=" + funciones[i][2],
+				type: "POST",
+				dataType: "json",
+				url: "insertar-funciones.php",
+				success: function(data){
+					$("#funciones-lista").append("<div><b>Funcion:</b> " + data[1] + " <b>Color:</b> " + data[2] +
+						" <b>Grosor:</b> " + data[3] + " <input type='checkbox' value='" + data[0] + "....." +
+						data[1]	+ "....." + data[2] + "....." + data[3] + "' /></div>");
+				}
+			});
+		}
+	});
+
+	$("#graficar-funciones").click(function(){
+		var func = [];
+		var func2 = [];
+
+		$("input:checkbox:checked").each(function(i, as){
+			func.push([as.value.split(".....")[1], as.value.split(".....")[2], as.value.split(".....")[3]]);
+			func2.push([as.value.split(".....")[1] + "-" + "<input class='color' type='text' size='1' value="+ 
+				as.value.split(".....")[2].substring(1) +">" +"-"+ as.value.split(".....")[3]]);
+		});
+		console.log(func);
+		console.log(func2);
+		dibujar_ejes();
+		Concurrent.Thread.create(dibuja, func);
+		Concurrent.Thread.create(lista, func2);
+	});
+
+	$("#eliminar-funciones").click(function(){
+		$("input:checkbox:checked").each(function(i, as){
+			$.ajax({
+				data: "funcion=" + as.value.split(".....")[0],
+				type: "POST",
+				dataType: "json",
+				url: "eliminar-funciones.php",
+				success: function(data){
+				}
+			});
+		});
+		$("input:checkbox:checked").parent().remove();
 	});
 })
