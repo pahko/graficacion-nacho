@@ -124,7 +124,7 @@ $(function(){
 			}
 	});
 	$( "#zoom" ).val($( "#slider" ).slider( "value" )+'%' );
-	$('#x').click(function(){
+	/*$('#x').click(function(){
 		$('#funcion').val('').val('x');
 		$('#dibujar').click();
 	});
@@ -171,13 +171,13 @@ $(function(){
 	$('#atan').click(function(){
 		$('#funcion').val('').val('1/Math.tan(x)');
 		$('#dibujar').click();
-	});
-
+	});*/
 
 
 	/*
 	 *Creacion del puerto de vision (canvas)
 	 */
+	 /*
 	canvas = $('#micanvas')[0]
 	contexto = canvas.getContext('2d')
 	contexto.fillStyle = '#ffffff';
@@ -185,12 +185,12 @@ $(function(){
 
 	contexto.fill();
 	contexto.stroke();
-	contexto.closePath();
+	contexto.closePath();*/
 
 	/*
 	 *Asigancion de eventos a los botones
 	 */
-	$('#borrar').click(dibujar_ejes).click()
+	/*$('#borrar').click(dibujar_ejes).click()
 
 	$('#dibujar').click(function(){
 		funciones.push([$('#funcion').val(), '#' + $('#colorpicker').val(), +$('#ancho').val()])
@@ -243,5 +243,17 @@ $(function(){
 		funciones = [];
 		funciones2 = [];
 		$("#lista").html('');
+	});*/
+
+	$("#registrarse").click(function(){
+		$("#errores-reg").html('');
+		$.ajax({ data: "parametro1=valor1&parametro2=valor2",
+			type: "POST",
+			dataType: "json",
+			url: "registro.php",
+			success: function(data){
+				console.log(data[1]);
+			}
+		});
 	});
 })

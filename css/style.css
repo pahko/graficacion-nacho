@@ -40,3 +40,9 @@ h3{
 	color:CC0000;
 	font-size:15px;
 }
+.field{
+	padding:20px;
+}
+.field label{
+	margin-right:10px;
+}
