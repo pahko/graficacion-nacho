@@ -297,4 +297,16 @@ $(function(){
 			}
 		});
 	});
+
+	$("#logout").click(function(){
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "logout.php",
+			success: function(data){
+				location.href = "index.php#usuario";
+				location.reload(true);
+			}
+		});
+	});
 })
