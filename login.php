@@ -11,14 +11,13 @@
         if (!mysql_select_db(DB, $link)) {
             echo json_encode(array("error", "sin acceso a la base de datos"));
         }
-        //$sql = "INSERT INTO usuario (email, pass, passv) VALUES ('pahk, 'xD)";
-        $sql = "INSERT INTO usuario (email, pass) VALUES ('". $_POST['usuario'] ."', '". md5($_POST['pass']) ."')";
-
-        if (!mysql_query($sql)) {
-            echo json_encode(array("error", "error al insertar el usuario"));
-        } else{
+        $sql = "SELECT * FROM usuario where email = '". $_POST['usuario'] ."' and pass = '". $_POST['pass'] ."'";
+        $res = mysql_query($sql);
+        if ($row = mysql_fetch_row($res)){
             $_SESSION['usuario'] = $_POST['usuario'];
             echo json_encode(array("error", ""));
+        } else {
+            echo json_encode(array("error", "error al buscar el usuario"));
         }
     }
 ?>

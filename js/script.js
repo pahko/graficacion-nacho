@@ -247,12 +247,51 @@ $(function(){
 
 	$("#registrarse").click(function(){
 		$("#errores-reg").html('');
-		$.ajax({ data: "parametro1=valor1&parametro2=valor2",
+		if ($.trim($("#emailR").val()).length >= 4 && $.trim($("#passR").val()).length >= 4 && $.trim($("#passR2").val()).length >= 4){
+			if (/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/.test($("#emailR").val())) {
+				if ($("#passR").val() == $("#passR2").val()) {
+					$.ajax({
+						data: "usuario=" + $("#emailR").val() + "&pass=" + $("#passR").val() + "&pass2=" + $("#passR2").val(),
+						type: "POST",
+						dataType: "json",
+						url: "registro.php",
+						success: function(data){
+							if (data != null)
+								if (data[1].length == 0){
+									$("#registrodiv").hide('slow');
+									location.href = "index.php";
+								}else{
+									$("#errores-reg").html(data[1]);
+								}
+						}
+					});
+				} else {
+					$("#errores-reg").html('Las contraseñas no coinciden');
+				}
+			} else {
+				$("#errores-reg").html('El email no es valido');
+			}
+		} else {
+			$("#errores-reg").html('Todos los campos son necesarios');
+		}
+	});
+
+	$("#login").click(function(){
+		$("#errores-reg").html('');
+		$.ajax({
+			data: "usuario=" + $("#emailR").val() + "&pass=" + $("#passR").val(),
 			type: "POST",
 			dataType: "json",
-			url: "registro.php",
+			url: "login.php",
 			success: function(data){
-				console.log(data[1]);
+				if (data != null){
+					if (data[1].length == 0){
+						$("#registrodiv").hide('slow');
+						location.href = "index.php";
+					}else{
+						$("#errores-reg").html(data[1]);
+					}
+				}
 			}
 		});
 	});

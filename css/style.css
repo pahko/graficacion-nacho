@@ -46,3 +46,6 @@ h3{
 .field label{
 	margin-right:10px;
 }
+#errores-reg{
+	color:red;
+}

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html>
 	<head>
@@ -23,26 +24,41 @@
 				<canvas id="micanvas" width="800" height="600">No es compatible</canvas>
 			</div>
 			<div id="usuario">
-				<form id="registro" method="post" accept-charset="utf-8">
-					<div class="field" id="errores-reg">
-					</div>
+				<?php
+					if (isset($_SESSION['usuario'])){
+				?>
+				<h2>Bienvenido <?php echo $_SESSION['usuario']; ?></h2>
+				<br />
+				<button id="logout">Cerrar Sesión</button>
+				<?php
+					}else{
+				?>
+				<div id="registrodiv">
+					<form id="registro" method="post" accept-charset="utf-8">
+						<div class="field" id="errores-reg">
+						</div>
+						<div class="field">
+							<label>Email:</label>
+							<input type="text" id="emailR" name="email" size="35">
+						</div>
+						<div class="field">
+							<label>Contraseña:</label>
+							<input type="password" id="passR" name="pass" size="29">
+						</div>
+						<div class="field">
+							<label>Verificar Contraseña:</label>
+							<input type="password" id="passR2" name="pass2">
+						</div>
+					</form>
 					<div class="field">
-						<label>Email:</label>
-						<input type="text" name="email" size="35">
+						<button id="registrarse">Registrarse</button>
+						<button id="login">Iniciar Sesión</button>
 					</div>
-					<div class="field">
-						<label>Contraseña:</label>
-						<input type="text" name="pass" size="29">
-					</div>
-					<div class="field">
-						<label>Verificar Contraseña:</label>
-						<input type="text" name="pass2">
-					</div>
-				</form>
-				<div class="field">
-					<button id="registrarse">Registrarse</button>
-				</div>
-			</div>
+				</div><!-- registro -->
+				<?php
+					}
+				?>
+			</div><!-- usuario -->
 		</div>
 		<div id="panel">
 			<ul>
