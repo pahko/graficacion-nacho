@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-11-2011 a las 18:36:46
+-- Tiempo de generación: 23-11-2011 a las 00:31:58
 -- Versión del servidor: 5.5.16
 -- Versión de PHP: 5.3.8
 
@@ -25,6 +25,26 @@ USE `graficacion`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `funciones`
+--
+
+CREATE TABLE IF NOT EXISTS `funciones` (
+  `idfunciones` int(11) NOT NULL AUTO_INCREMENT,
+  `funcion` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `color` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
+  `grosor` int(11) NOT NULL,
+  `idUsuario` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idfunciones`),
+  KEY `Usuario` (`idUsuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=49 ;
+
+--
+-- Volcado de datos para la tabla `funciones`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -34,9 +54,21 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `pass` varchar(45) COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=27 ;
 
+--
+-- Volcado de datos para la tabla `usuario`
+--
 
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `funciones`
+--
+ALTER TABLE `funciones`
+  ADD CONSTRAINT `Usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
