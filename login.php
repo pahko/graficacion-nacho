@@ -11,7 +11,7 @@
         if (!mysql_select_db(DB, $link)) {
             echo json_encode(array("error", "sin acceso a la base de datos"));
         }
-        $sql = "SELECT * FROM usuario where email = '". $_POST['usuario'] ."' and pass = '". $_POST['pass'] ."'";
+        $sql = "SELECT * FROM usuario where email = '". $_POST['usuario'] ."' and pass = '". md5($_POST['pass']) ."'";
         $res = mysql_query($sql);
         if ($row = mysql_fetch_row($res)){
             $_SESSION['usuario'] = $_POST['usuario'];

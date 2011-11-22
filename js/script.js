@@ -259,7 +259,8 @@ $(function(){
 							if (data != null)
 								if (data[1].length == 0){
 									$("#registrodiv").hide('slow');
-									location.href = "index.php";
+									location.href = "index.php#usuario";
+									location.reload(true);
 								}else{
 									$("#errores-reg").html(data[1]);
 								}
@@ -287,7 +288,8 @@ $(function(){
 				if (data != null){
 					if (data[1].length == 0){
 						$("#registrodiv").hide('slow');
-						location.href = "index.php";
+						location.href = "index.php#usuario";
+						location.reload(true);
 					}else{
 						$("#errores-reg").html(data[1]);
 					}
